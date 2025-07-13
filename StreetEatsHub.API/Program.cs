@@ -71,8 +71,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 // Add Services
-builder.Services.AddScoped<IAuthService, StreetEatsHub.API.Services.AuthService>();
-builder.Services.AddScoped<IVendorService, StreetEatsHub.API.Services.VendorService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IVendorService, VendorService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

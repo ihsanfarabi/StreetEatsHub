@@ -71,43 +71,7 @@ namespace StreetEatsHub.API.Controllers
             return Ok(new { message = "Status updated successfully", isOpen = statusDto.IsOpen });
         }
 
-        /// <summary>
-        /// Get vendor menu (public endpoint)
-        /// </summary>
-        [HttpGet("{id}/menu")]
-        public async Task<IActionResult> GetVendorMenu(int id)
-        {
-            var menuItems = await _vendorService.GetVendorMenuAsync(id);
-            return Ok(menuItems);
-        }
 
-        /// <summary>
-        /// Update vendor menu (requires authentication)
-        /// </summary>
-        [HttpPut("{id}/menu")]
-        [Authorize]
-        public async Task<IActionResult> UpdateMenu(int id, [FromBody] UpdateMenuDto menuDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized();
-            }
-
-            var success = await _vendorService.UpdateVendorMenuAsync(id, userId, menuDto.MenuItems);
-
-            if (!success)
-            {
-                return NotFound(new { message = "Vendor not found or access denied" });
-            }
-
-            return Ok(new { message = "Menu updated successfully" });
-        }
 
         /// <summary>
         /// Get open vendors only (public endpoint)

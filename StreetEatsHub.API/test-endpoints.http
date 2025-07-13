@@ -1,0 +1,147 @@
+@baseUrl = https://localhost:7096/api
+@vendorId = 2
+@menuItemId = 13
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjdhNmU1ZTE3LWI4MzUtNDQyOS04NWU4LTZiODI3ODU5NzEwYyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InZlbmRvckB0ZXN0LmNvbSIsIlZlbmRvcklkIjoiMiIsImp0aSI6ImZmNTM5YmUzLTRlNDQtNDE5OC04MGMyLWM2Njc2Mzg3Y2I3MiIsImV4cCI6MTc1MjQ5ODQxMCwiaXNzIjoiU3RyZWV0RWF0c0h1YiIsImF1ZCI6IlN0cmVldEVhdHNIdWItVXNlcnMifQ.yQy-HN7lXgJj21yYnjp7DPVCkQHxv3UN51cG2uRS20s
+
+### Register Vendor
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "vendor@test.com",
+  "password": "Test123!",
+  "name": "Test Vendor",
+  "location": "Test Street Food Market",
+  "specialty": "Asian Fusion",
+  "whatsAppNumber": "+1234567890"
+}
+
+### Login Vendor
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "vendor@test.com",
+  "password": "Test123!"
+}
+
+### Test Authentication
+GET {{baseUrl}}/auth/test
+Authorization: Bearer {{token}}
+
+### Get All Vendors
+GET {{baseUrl}}/vendors
+
+### Get Vendor Details
+GET {{baseUrl}}/vendors/{{vendorId}}
+
+### Update Vendor Status
+PUT {{baseUrl}}/vendors/{{vendorId}}/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "isOpen": false
+}
+
+### Get Vendor Menu
+GET {{baseUrl}}/vendors/{{vendorId}}/menu
+
+### Get Available Menu Items Only
+GET {{baseUrl}}/vendors/{{vendorId}}/menu/available
+
+### Get Menu Categories
+GET {{baseUrl}}/vendors/{{vendorId}}/menu/categories
+
+### Create Menu Item
+POST {{baseUrl}}/vendors/{{vendorId}}/menu
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Pad Thai",
+  "price": 12.99,
+  "isAvailable": true,
+  "category": "Main Course"
+}
+
+### Create Another Menu Item
+POST {{baseUrl}}/vendors/{{vendorId}}/menu
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Spring Rolls",
+  "price": 6.99,
+  "isAvailable": true,
+  "category": "Appetizer"
+}
+
+### Get Specific Menu Item
+GET {{baseUrl}}/vendors/{{vendorId}}/menu/{{menuItemId}}
+
+### Update Menu Item
+PUT {{baseUrl}}/vendors/{{vendorId}}/menu/{{menuItemId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Pad Thai (Updated)",
+  "price": 13.99,
+  "isAvailable": true,
+  "category": "Main Course"
+}
+
+### Toggle Menu Item Availability
+PATCH {{baseUrl}}/vendors/{{vendorId}}/menu/{{menuItemId}}/availability
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "isAvailable": false
+}
+
+### Batch Toggle Availability
+PATCH {{baseUrl}}/vendors/{{vendorId}}/menu/batch/availability
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "menuItemIds": [7, 8],
+  "isAvailable": false
+}
+
+### Replace Entire Menu
+PUT {{baseUrl}}/vendors/{{vendorId}}/menu
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "menuItems": [
+    {
+      "name": "Tom Yum Soup",
+      "price": 8.99,
+      "isAvailable": true,
+      "category": "Soup"
+    },
+    {
+      "name": "Green Curry",
+      "price": 14.99,
+      "isAvailable": true,
+      "category": "Main Course"
+    },
+    {
+      "name": "Mango Sticky Rice",
+      "price": 5.99,
+      "isAvailable": true,
+      "category": "Dessert"
+    }
+  ]
+}
+
+### Delete Menu Item
+DELETE {{baseUrl}}/vendors/{{vendorId}}/menu/{{menuItemId}}
+Authorization: Bearer {{token}}
+
+### Get Open Vendors Only
+GET {{baseUrl}}/vendors/open

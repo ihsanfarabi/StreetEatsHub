@@ -41,4 +41,28 @@ namespace StreetEatsHub.API.DTOs
         [Required]
         public bool IsAvailable { get; set; }
     }
+
+    // For updating individual menu item
+    public class UpdateMenuItemDto
+    {
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [Range(0.01, 999999.99)]
+        public decimal Price { get; set; }
+
+        public bool IsAvailable { get; set; } = true;
+
+        [MaxLength(50)]
+        public string Category { get; set; } = "General";
+    }
+
+    // For batch menu operations
+    public class BatchMenuOperationDto
+    {
+        public List<int> MenuItemIds { get; set; } = new();
+        public bool IsAvailable { get; set; }
+    }
 }
